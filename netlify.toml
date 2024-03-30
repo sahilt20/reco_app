@@ -1,0 +1,12 @@
+toml
+[build]
+  command = "streamlit run app.py"
+  publish = ""
+
+[dev]
+  framework = "#custom"
+  command = "streamlit run app.py"
+  targetPort = 8501
+  port = 8501
+  publish = ""
+  autoLaunch = false
