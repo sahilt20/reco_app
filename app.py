@@ -83,7 +83,7 @@ def apply_fuzzy_matching(df1, df2, key1, key2, threshold=90):
 
 def reconcile_dataframes(df1, df2, match_settings):
 
-    removed_from_df1, removed_from_df2 = remove_matching_transactions(df1, df2, 'Debit amount', 'Credit amount')
+    #removed_from_df1, removed_from_df2 = remove_matching_transactions(df1, df2, 'Debit amount', 'Credit amount')
     # Prepare for combined matching
     for setting in match_settings:
         if setting['type'] == 'fuzzy':
@@ -144,7 +144,7 @@ def reconcile_dataframes(df1, df2, match_settings):
         'Unmatched Ledger Transactions': len(unmatched_ledger)
     }
     
-    return reconciliation_summary, annexure1_df, annexure2_df, annexure3_df, annexure4_df, removed_from_df1, removed_from_df2
+    return reconciliation_summary, annexure1_df, annexure2_df, annexure3_df, annexure4_df#, removed_from_df1, removed_from_df2
 
 def main():
     st.title("Excel Table Analyzer and Reconciler")
@@ -184,19 +184,19 @@ def main():
                     match_settings.append({'source1_col': c1, 'source2_col': c2, 'type': 'exact'})
             
             if st.button("Reconcile DataFrames", key='reconcile_button'):
-                summary, annexure1_df, annexure2_df, annexure3_df, annexure4_df, removed_from_df1, removed_from_df2 = reconcile_dataframes(tables[source1], tables[source2], match_settings)
+                summary, annexure1_df, annexure2_df, annexure3_df, annexure4_df= reconcile_dataframes(tables[source1], tables[source2], match_settings)
 
                 # Display removed matching transactions
 
             
-            # Display the count and rows of removed transactions
-                st.header('Removed Transactions from Source 1')
-                st.write(f"Count: {len(removed_from_df1)}")
-                st.dataframe(removed_from_df1)
+            # # Display the count and rows of removed transactions
+            #     st.header('Removed Transactions from Source 1')
+            #     st.write(f"Count: {len(removed_from_df1)}")
+            #     st.dataframe(removed_from_df1)
 
-                st.header('Removed Transactions from Source 2')
-                st.write(f"Count: {len(removed_from_df2)}")
-                st.dataframe(removed_from_df2)
+            #     st.header('Removed Transactions from Source 2')
+            #     st.write(f"Count: {len(removed_from_df2)}")
+            #     st.dataframe(removed_from_df2)
                 st.header('Reconciliation Summary')
                 st.write(summary)
                 
